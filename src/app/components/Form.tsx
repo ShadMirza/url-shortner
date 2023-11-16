@@ -10,6 +10,7 @@ const schema = yup.object({
   miniLink: yup.string().max(10),
 });
 
+
 const Form = () => {
   const [generatedLink, setGeneratedLink] = useState("");
   const [linkExists, setLinkExists] = useState(false);
@@ -60,7 +61,7 @@ const Form = () => {
           </label>
           <input
             type="text"
-            placeholder=""
+            placeholder="eg. https://example.com"
             className="input input-bordered w-full max-w-xs text-base"
             {...register("longLink", { required: true, maxLength: 50 })}
           />
@@ -72,7 +73,7 @@ const Form = () => {
           </label>
           <input
             type="text"
-            placeholder="eg. /edfgh3 (Optional)"
+            placeholder="eg. edfgh3 (Optional)"
             className="input input-bordered w-full max-w-xs text-base"
             {...register("miniLink", { required: true, maxLength: 50 })}
           />
