@@ -5,11 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 
-type formData = {
-  longLink: string;
-  miniLink: string;
-};
-
 const schema = yup.object({
   longLink: yup.string().url().max(50).required(),
   miniLink: yup.string().max(10),
@@ -23,7 +18,7 @@ const Form = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<formData>({ resolver: yupResolver(schema) });
+  } = useForm({ resolver: yupResolver(schema) });
   const onSubmit = async (data: formData) => {
     setLinkExists(false);
     try {
