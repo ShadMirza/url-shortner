@@ -1,7 +1,7 @@
 import Form from "./Form";
 import { FaLink  } from "react-icons/fa";
 
-const form = () => {
+const FormCard = () => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <div className="card-body">
@@ -12,4 +12,4 @@ const form = () => {
   );
 };
 
-export default form;
+export default FormCard;

@@ -15,7 +15,7 @@ const schema = yup.object({
   miniLink: yup.string().max(10),
 });
 
-const form = () => {
+const Form = () => {
   const [generatedLink, setGeneratedLink] = useState("");
   const [linkExists, setLinkExists] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
@@ -115,4 +115,4 @@ const form = () => {
   );
 };
 
-export default form;
+export default Form;
