@@ -19,7 +19,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-  const onSubmit = async (data: formData) => {
+  const onSubmit = async (data:any) => {
     setLinkExists(false);
     try {
       const res = await fetch("/api/url-shortner", {
