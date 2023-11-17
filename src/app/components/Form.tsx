@@ -15,14 +15,17 @@ const Form = () => {
   const [generatedLink, setGeneratedLink] = useState("");
   const [linkExists, setLinkExists] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [isLoadinng, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
   const onSubmit = async (data:any) => {
     setLinkExists(false);
     try {
+      setLoading(true)
       const res = await fetch("/api/url-shortner", {
         method: "POST",
         headers: {
@@ -36,13 +39,14 @@ const Form = () => {
       }
   
       const responseData = await res.json();
+      setLoading(false)
       setGeneratedLink(responseData?.generatedLink);
       setLinkExists(responseData?.linkExists);
   
     } catch (error:any) {
       console.error('Error:', error.message);
       // Handle error as needed, e.g., show a toast message
-      toast("An error occurred while processing your request", { icon: "❌" });
+      toast.error("An error occurred while processing your request");
     }
   };
   
@@ -51,17 +55,19 @@ const Form = () => {
       toast("Similar URL already exists", { icon: "⚠️" });
     }
   }, [linkExists]);
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={true} />
       <form method="post" onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-control w-full max-w-xs">
+        <div className="form-control w-full max-w-xs mb-4">
           <label className="label">
             <span className="label-text">Enter Your Long URL</span>
           </label>
           <input
             type="text"
             placeholder="eg. https://example.com"
+            autoFocus
             className="input input-bordered w-full max-w-xs text-base"
             {...register("longLink", { required: true, maxLength: 50 })}
           />
@@ -86,7 +92,7 @@ const Form = () => {
       {generatedLink ? (
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text">Your generated URL is</span>
+            <span className="label-text">Your generated URL </span>
           </label>
           <div
             className="tooltip tooltip-bottom"
@@ -104,9 +110,11 @@ const Form = () => {
             />
           </div>
         </div>
-      ) : (
-        null
-      )}
+      ) : (isLoadinng ? (
+        <div className="flex items-center justify-center">
+        <progress className="progress w-100 mt-4"></progress>
+        </div>
+      ) : null) }
     </>
   );
 };
